@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+# -*- Makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export DH_OPTIONS += -O-Bbuild-tree
+
+# Get upstream tarball version from debian/changelog
+#UPSTREAM_VERS= $(shell dpkg-parsechangelog | grep ^Version | cut -d" " -f2 | cut -d"-" -f1)
+
+%:
+	dh $@ --with autoreconf

@@ -1,0 +1,60 @@
+Source: libdbi
+Section: libs
+Priority: optional
+Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
+Uploaders: Prach Pongpanich <prachpub@gmail.com>
+Build-Depends: debhelper-compat (= 13),
+               docbook-dsssl,
+               texlive-formats-extra
+Standards-Version: 4.5.1
+Homepage: https://libdbi.sourceforge.net/
+Rules-Requires-Root: no
+
+Package: libdbi1
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Breaks: libapache2-mod-log-sql-dbi (<= 1.100-11),
+        libdbd-freetds (<< 0.9.0-2),
+        libdbd-mysql (<< 0.9.0-2),
+        libdbd-pgsql (<< 0.9.0-2),
+        libdbd-sqlite (<< 0.9.0-2),
+        libdbd-sqlite3 (<< 0.9.0-2)
+Multi-Arch: same
+Description: DB Independent Abstraction Layer for C -- shared library
+ libdbi implements a database-independent abstraction layer in C, similar to
+ the DBI/DBD layer in Perl. Writing one generic set of code, programmers can
+ leverage the power of multiple databases and multiple simultaneous database
+ connections by using this framework.
+ .
+ This package is the shared library.
+
+Package: libdbi-dev
+Section: libdevel
+Architecture: any
+Depends: libdbi1 (= ${binary:Version}),
+         ${misc:Depends}
+Replaces: libdbi0,
+          libdbi0-dev,
+          libdbi1 (<< 0.8.4-2)
+Conflicts: libdbi0-dev
+Provides: libdbi0-dev
+Description: DB Independent Abstraction Layer for C  -- development files
+ libdbi implements a database-independent abstraction layer in C, similar to
+ the DBI/DBD layer in Perl. Writing one generic set of code, programmers can
+ leverage the power of multiple databases and multiple simultaneous database
+ connections by using this framework.
+ .
+ This package contains development files so you can compile using libdbi.
+
+Package: libdbi-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Description: DB Independent Abstraction Layer for C  -- documentation
+ libdbi implements a database-independent abstraction layer in C, similar to
+ the DBI/DBD layer in Perl. Writing one generic set of code, programmers can
+ leverage the power of multiple databases and multiple simultaneous database
+ connections by using this framework.
+ .
+ This package contains the documentation of libdbi.

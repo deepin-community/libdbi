@@ -1,0 +1,3 @@
+version=4
+https://qa.debian.org/watch/sf.php/libdbi/ \
+libdbi-(.*)\.(?:tar\.xz|txz|tar\.bz2|tbz2|tar\.gz|tgz)

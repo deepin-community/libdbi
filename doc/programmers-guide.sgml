@@ -1,0 +1,158 @@
+<!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+
+<!ENTITY libdbi-reference SYSTEM "libdbi-reference.sgml">
+<!ENTITY libdbi-quickstart SYSTEM "libdbi-quickstart.sgml">
+<!ENTITY libdbi-errorhandling SYSTEM "libdbi-errorhandling.sgml">
+<!ENTITY libdbi-transactions SYSTEM "libdbi-transactions.sgml">
+<!ENTITY libdbi-versioning SYSTEM "libdbi-versioning.sgml">
+<!ENTITY example-program SYSTEM "example-program.sgml">
+<!ENTITY freedoc-license SYSTEM "include/copying-fdl.sgml">
+<!ENTITY www '<ULink url="http://libdbi.sourceforge.net">http://libdbi.sourceforge.net</ULink>'>
+
+]>
+
+<Book id="programmers-guide">
+
+  <BookInfo>
+    <Title>Database Independent Abstraction Layer for C</Title>
+    <SubTitle>libdbi Programmer's Guide</SubTitle>
+    <Author>
+      <Firstname>David</Firstname>
+      <Othername>A.</Othername>
+      <Surname>Parker</Surname>
+      <Affiliation>
+	<OrgName>Neon Goat Productions</OrgName>
+	<Address><EMail>david@neongoat.com</EMail></Address>
+      </Affiliation>
+    </Author>
+    <author>
+      <firstname>Markus</firstname>
+      <surname>Hoenicka</surname>
+      <affiliation>
+	<address format="linespecific"><email>markus@mhoenicka.de</email></address>
+      </affiliation>
+    </author>
+    <Edition>Document revision: $Id: programmers-guide.sgml,v 1.18 2013/02/03 23:04:32 mhoenicka Exp $</Edition>
+    <PubDate>$Date: 2013/02/03 23:04:32 $</PubDate>
+    <Copyright>
+      <Year>2001-2013</Year>
+      <Holder>David Parker, Neon Goat Productions</Holder>
+      <holder>Markus Hoenicka</holder>
+    </Copyright>
+    <LegalNotice>
+      <Para>
+	Permission is granted to copy, distribute and/or modify this
+	document under the terms of the <Link linkend="copying-FDL">
+	  <CiteTitle>GNU Free Documentation License</CiteTitle></Link>,
+	Version 1.1 or any later version published by the Free Software
+	Foundation; with no Invariant Sections, with no	Front-Cover Texts,
+	and with no Back-Cover Texts.  A copy of the license is included in
+	<XRef linkend="copying-FDL">.
+      </Para>
+    </LegalNotice>
+    <Abstract>
+      <Para>
+	libdbi implements a database-independent abstraction layer in C,
+	similar to the DBI/DBD layer in Perl. Writing one generic set of code,
+	programmers can leverage the power of multiple databases and multiple
+	simultaneous database connections by using this framework.
+      </Para>
+    </Abstract>
+  </BookInfo>
+
+  <Chapter id="intro"><Title>Introduction</Title>
+    <Section id="description"><Title>Description</Title>
+      <Para>
+	libdbi provides application developers with a database independent abstraction
+	layer for C. It handles the database-specific implementations for each type of
+	database, so that you can use the same exact code with any type of database server
+	that libdbi supports. You can initiate and use multiple database connections
+	simultaneously, regardless of the types of database servers you are connecting to.
+	The driver architecture allows for new database drivers to be easily added
+	dynamically.
+      </Para>
+    </Section>
+    <Section id="terminology"><Title>libdbi Concepts and Terminology</Title>
+      <para>In this guide, the terms <Quote>user</Quote> and <Quote>programmer</Quote> are used interchangably, since the target audience is the software developer using libdbi in his	program. A star character (*) represents a wildcard matching any letters. For example, <Quote>dbi_conn_*</Quote> would represent all functions beginning with <Quote>dbi_conn_</Quote>.</para>
+      <para>Before doing anything useful, your program must initialize libdbi. This creates an <quote>instance</quote> of libdbi which is accessible through a handle. The libdbi architecture provides several <quote>drivers</quote>, one for each type of database server. All drivers are loaded into memory by each libdbi instance upon initialization and are made available to the programmer. Once a driver is <Emphasis>instantiated</Emphasis>, it represents a distinct database session and is called a <Quote>connection</Quote>.</Para>
+    </Section>
+    <Section id="gnugpl"><Title>Modifications and redistribution of libdbi</Title>
+      <Para>
+	libdbi is Copyright &copy; 2001-2005, David Parker and Mark Tobenkin.
+      </Para>
+      <Para>			
+	libdbi is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+      </Para>
+      <Para>
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+      </Para>
+      <Para>
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+      </Para>
+    </Section>
+    <Section id="contact"><Title>Contact Info</Title>
+      <Para>
+	Please email us with any bugs, ideas, feature requests, or questions. The libdbi
+	website has the latest version of this documentation and the libdbi software, as
+	well as a central database of third-party drivers.
+      </Para>
+      <ItemizedList>
+	<ListItem><Para>&www;</Para></ListItem>
+	<ListItem><Para>David Parker <EMail>david@neongoat.com</EMail></Para></ListItem>
+	<ListItem><Para>Mark Tobenkin <EMail>mark@brentwoodradio.com</EMail></Para></ListItem>
+	<ListItem><Para>Markus Hoenicka <EMail>markus@mhoenicka.de</EMail></Para></ListItem>
+      </ItemizedList>
+    </Section>
+  </Chapter>
+
+  <chapter id="buildinstall">
+    <title>Building and Installing libdbi</title>
+    <para>libdbi uses the "autotools", i.e. <application moreinfo="none">automake</application>, <application moreinfo="none">autoconf</application>, and <application moreinfo="none">libtool</application> to provide a simple and consistend build and install process on all supported platforms. The good news is that you usually don't have to fiddle that much with <command moreinfo="none">./configure</command> as libdbi provides only a single option:</para>
+    <variablelist>
+      <varlistentry>
+	<term><option>--disable-docs</option></term>
+	<listitem>
+	  <para>If you build libdbi from a tarball, the docs are already prebuilt and ready to install. In this case, you don't need this option. However, if you build from a cvs checkout, this is a simple way to switch off building the documentation. This is useful if you don't want to install the prerequisites for building the docs (<application moreinfo="none">openjade</application>, the DocBook DSSSL stylesheets, <application moreinfo="none">TeX</application>, and <application moreinfo="none">JadeTeX</application>).</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+    <para>If you type <command moreinfo="none">./configure --help</command>, you'll see a few more options. These are provided by the autotools, and you should consult their documentation to make best use of them.</para>
+    <para>Once you have figured out which options to use or not, you are ready to go ahead and run:</para>
+    <screen format="linespecific">
+      <prompt moreinfo="none">$ </prompt><command moreinfo="none">./configure [your options]</command>
+      <prompt moreinfo="none">$ </prompt><command moreinfo="none">make</command>
+      <prompt moreinfo="none">$ </prompt><command moreinfo="none">sudo make install</command>
+</screen>
+  </chapter>
+
+  <Chapter id="quickstart"><Title>libdbi in a Nutshell (Quickstart Guide)</Title>
+    <!-- this is a section -->
+      &libdbi-quickstart;
+    <!-- this is another section -->
+      &example-program;
+  </Chapter>
+
+  <chapter id="errorhandling"><title>Error Handling</Title>
+    &libdbi-errorhandling;
+  </Chapter>
+
+  <chapter id="transactions-savepoints"><title>Transactions and Savepoints</Title>
+    &libdbi-transactions;
+  </Chapter>
+
+  <chapter id="versioning"><title>Library and Interface Versions</Title>
+    &libdbi-versioning;
+  </Chapter>
+
+  &libdbi-reference;
+  &freedoc-license;
+
+</Book>

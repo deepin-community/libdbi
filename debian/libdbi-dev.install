@@ -1,0 +1,4 @@
+usr/include/dbi/*.h
+usr/lib/*/libdbi.a
+usr/lib/*/libdbi.so
+usr/lib/*/pkgconfig/dbi.pc
